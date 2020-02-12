@@ -97,3 +97,34 @@ Route::get('restoredelete', function(){
 Route::get('forcedeletetrash', function(){
     Post::onlyTrashed()->forceDelete();
 });
+
+
+Route::get('user_registration', 'User@register');
+
+Route::post('create_user', 'User@create_user');
+
+Route::get('user_login', function(){
+    return view('user.login');
+});
+
+Route::post('user_login', 'User@user_login');
+
+Route::get('user_dashboard', function(){
+    return view('user.dashboard');
+});
+
+Route::get('user_logout', function(){
+    Session::flush();
+    if(empty(Session::get('username'))){
+        return redirect('user_login');
+    }
+});
+
+Route::get('user_list', 'User@user_list');
+
+Route::get('user_update/{id}', 'User@user_update');
+
+Route::patch('user/{user}/update',  ['as' => 'user.update', 'uses' => 'User@update_user']);
+
+Route::get('user/{user}/delete',  ['as' => 'user.delete', 'uses' => 'User@delete_user']);
+
